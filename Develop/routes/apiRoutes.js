@@ -30,4 +30,22 @@ router.get("/api/workouts", (req, res) => {
     });
 });
 
+router.get("/api/workouts/range", ({ query }, res) => {
+    Workout.find({ day: { $gte: query.start, $lte: query.end}})
+        .then(dbWorkouts => {
+            res.json(dbWorkouts);
+        }).catch(err => {
+            res.status(400).json(err);
+        });
+});
+
+router.delete("/api/workouts", ({ body }, res) => {
+    Workout.findByIdAndDelete(body.id)
+        .then(() => {
+            res.json(dbWorkouts);
+        }).catch(err => {
+            res.status(400).json(err);
+        });
+});
+
 module.exports = router;
