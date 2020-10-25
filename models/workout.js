@@ -1,7 +1,9 @@
+//Required dependencies
 const mongoose = require("mongoose");
 
+//Mongoose Schema for exercises.
 const workoutSchema = new mongoose.Schema({
-  day: {type: Date, default: Date.now},
+  day: {type: Date, default: new Date()},
   exercises: [
     {
       type: {type: String, trim: true, required: true},
@@ -15,6 +17,7 @@ const workoutSchema = new mongoose.Schema({
   ],
 },
 {
+//Include any necessary virtuals
   toJSON: {
     virtuals: true
   }
@@ -26,6 +29,7 @@ workoutSchema.virtual("totalDuration").get(function() {
   }, 0);
 });
 
+//Export Workout module
 const Workout = mongoose.model("Workout", workoutSchema);
 
 module.exports = Workout;
