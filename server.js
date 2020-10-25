@@ -8,7 +8,6 @@ const PORT = process.env.PORT || 3000;
 
 const app = express();
 
-
 //Middleware for json parsing and access to the 'public' folder
 app.use(morgan("combined"));
 app.use(express.urlencoded({ extended: true }));
@@ -18,7 +17,12 @@ app.use(express.static("public"));
 //Connect to MongoDB for database updates/retrieval
 mongoose.connect(
   process.env.MONGODB_URI || "mongodb://localhost/workout",
-  { useNewUrlParser: true, useFindAndModify: false },
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+  },
   (err) => {
     console.log(err);
   }
